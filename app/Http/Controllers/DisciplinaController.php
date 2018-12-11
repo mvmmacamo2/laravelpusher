@@ -8,13 +8,19 @@ use Pusher;
 
 class DisciplinaController extends Controller
 {
+    public function getDisciplina(){
+
+        $disciplina = Disciplina::orderBy('nome', 'asc')->get();
+        return view('Disciplina.lista', compact('disciplina'));
+    }
+
     public function save(Request $request) {
 
        $save= Disciplina::create($request->all());
 
        if ($save) {
 
-           $d = Disciplina::orderBy('id', 'desc')->get();
+           $d = Disciplina::orderBy('nome', 'asc')->get();
            $options = array(
                'cluster' => 'mt1',
                'useTLS' => true
@@ -30,7 +36,7 @@ class DisciplinaController extends Controller
 
            $pusher->trigger('my-channel', 'my-event', $d);
 
-           return redirect()->back();
+           return response()->json(['message' => 'Salvo com Sucesso!', 'data' => $d], 200);
        }
 
     }

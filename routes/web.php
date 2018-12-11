@@ -20,3 +20,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('save-disciplina','DisciplinaController@save');
+Route::get('get-disciplina','DisciplinaController@getDisciplina');
+
